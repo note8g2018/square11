@@ -11,6 +11,10 @@ const loginRouter = require('./route/login_R');
 const logoutRouter = require('./route/logout_R');
 const articleRouter = require('./route/article_R');
 const db = require('./db/db_DB');
+const bodyParser = require('body-parser');
+const sessions = require('express-session');
+
+let session;
 
 const app = express();
 
@@ -47,6 +51,12 @@ start();
 // });
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}));
+app.use(sessions({
+  secret: 'gyigivurvygytivfutvyi@@@@@@@^80528549812fjvnvbregh',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.use('/checkusername', userNameRouter);
 app.use('/checkemail', emailRouter);
@@ -54,3 +64,5 @@ app.use('/reg', regRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/article', articleRouter);
+
+module.exports = session;
